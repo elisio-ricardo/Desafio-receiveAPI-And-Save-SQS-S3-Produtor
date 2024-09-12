@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class UploadPortInImpl implements UploadPortIn {
     @Override
-    public UploadResponseDTO saveUpload(MultipartFile file, Upload metadata) {
+    public UploadResponseDTO uploadSQSAndS3(MultipartFile file, Upload metadata) {
         return null;
     }
 }

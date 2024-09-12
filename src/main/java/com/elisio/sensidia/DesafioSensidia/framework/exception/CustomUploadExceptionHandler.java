@@ -19,7 +19,7 @@ public class CustomUploadExceptionHandler {
 
     @ExceptionHandler(ValidationError.class)
     public ResponseEntity<ErrosDetail> handleUploadException(ValidationError ex) {
-        log.error("Cheguei aqui: " + ex.getErrors().toString());
+        log.info("Gerando o erro: ValidationError");
         List<UploadException> errors = ex.getErrors().stream().
                 map(erro -> new UploadException(erro))
                 .collect(Collectors.toList());
@@ -29,7 +29,7 @@ public class CustomUploadExceptionHandler {
 
     @ExceptionHandler(JsonProcessingException.class)
     public ResponseEntity<ErrosDetail> handleJsonException(JsonProcessingException ex) {
-        log.error("Cheguei aqui: " + ex.getMessage());
+        log.info("Gerando o erro: JsonProcessingException");
         List<UploadException> errors = new ArrayList<>();
         errors.add(new UploadException(ex.getMessage()));
         ErrosDetail errosDetail = new ErrosDetail(new Date(), HttpStatus.BAD_REQUEST.value(), errors);

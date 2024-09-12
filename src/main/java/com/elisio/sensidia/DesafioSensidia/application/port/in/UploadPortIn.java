@@ -9,5 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface UploadPortIn {
 
-    UploadResponseDTO saveUpload(MultipartFile file, Upload metadata);
+    UploadResponseDTO uploadSQSAndS3(MultipartFile file, Upload metadata);
 }
