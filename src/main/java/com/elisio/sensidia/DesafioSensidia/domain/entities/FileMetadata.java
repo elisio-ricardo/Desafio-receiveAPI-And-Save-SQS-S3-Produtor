@@ -19,6 +19,6 @@ public class FileMetadata {
 
 
     @NotNull(message = "O fileSize não pode ser null")
-    private long fileSize;
+    private Long fileSize;
 
 }

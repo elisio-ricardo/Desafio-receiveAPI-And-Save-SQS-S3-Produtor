@@ -4,6 +4,8 @@ package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.rest;
 import com.elisio.sensidia.DesafioSensidia.application.port.in.UploadPortIn;
 import com.elisio.sensidia.DesafioSensidia.domain.entities.Upload;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationError;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.ConstraintViolation;
@@ -11,12 +13,12 @@ import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -38,33 +40,43 @@ public class UploadController {
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<UploadResponseDTO> uploadFile(
-                                                        @RequestParam("file") MultipartFile file,
-                                                        @RequestPart("metadataUpload") String metadataUpload
+            @RequestParam("file") MultipartFile file,
+            @RequestPart("metadataUpload") String metadataUpload
     ) {
         log.info("Iniciando Chamada com os dados: " + metadataUpload);
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Upload metadata = objectMapper.readValue(metadataUpload, Upload.class);
-            Set<ConstraintViolation<Upload>> violations = validator.validate(metadata);
-            log.info(violations.toString());
-            if (!violations.isEmpty()) {
-                StringBuilder errorMessage = new StringBuilder("Erro de validação: ");
-                for (ConstraintViolation<Upload> violation : violations) {
-                    errorMessage.append(violation.getMessage()).append("; ");
-                }
-               // return ResponseEntity.badRequest().body(errorMessage.toString());
-                return ResponseEntity.badRequest().build();
-            }
+            Upload metadata = getUpload(metadataUpload);
             log.info(metadata.toString());
-
             UploadResponseDTO savedUpload = uploadPortIn.saveUpload(file, metadata);
 
             return ResponseEntity.ok(savedUpload);
-        } catch (Exception e) {
-            log.info("Erro: " + e.getMessage());
-            return ResponseEntity.badRequest().build();
+        } catch (ValidationError e) {
+            log.error("Erro: " + e.getErrors());
+            throw new ValidationError(e.getErrors());
         }
 
+    }
+
+
+    private Upload getUpload(String metadataUpload) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Upload metadata = new Upload();
+        try {
+            metadata = objectMapper.readValue(metadataUpload, Upload.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        Set<ConstraintViolation<Upload>> violations = validator.validate(metadata);
+
+        if (!violations.isEmpty()) {
+            log.error("Adicionando erros: " + violations.toString());
+            List<String> errorMessage = new ArrayList<>();
+            for (ConstraintViolation<Upload> violation : violations) {
+                errorMessage.add(violation.getMessageTemplate());
+            }
+            throw new ValidationError(errorMessage);
+        }
+        return metadata;
     }
 
 }
