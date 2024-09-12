@@ -48,7 +48,4 @@ public class UploadController {
             throw new ValidationError(e.getErrors());
         }
     }
-
-
-
 }

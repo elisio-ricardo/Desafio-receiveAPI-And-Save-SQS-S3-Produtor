@@ -11,7 +11,6 @@ public class ValidationError extends RuntimeException {
     private final List<String> errors;
 
     public ValidationError(List<String> errors) {
-        //super("Validation failed with " + errors.size() + " error(s).");
         this.errors = errors;
     }
 

@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: desafioAWS
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${ACCESS_KEY_AWS:x}
+        secret-key: ${SECRET_KEY_AWS:x}
+      region:
+        static: ${REGION_AWS:us-east-2}
+      endpoint: x
+      sqs:
+        queue-name: sensidia-metadata
+
