@@ -8,7 +8,10 @@ import java.util.List;
 @Data
 public class ValidationError extends RuntimeException {
 
-    private final List<String> errors;
+    private List<String> errors;
+
+
+
 
     public ValidationError(List<String> errors) {
         this.errors = errors;
@@ -17,4 +20,5 @@ public class ValidationError extends RuntimeException {
     public List<String> getErrors() {
         return errors;
     }
+
 }

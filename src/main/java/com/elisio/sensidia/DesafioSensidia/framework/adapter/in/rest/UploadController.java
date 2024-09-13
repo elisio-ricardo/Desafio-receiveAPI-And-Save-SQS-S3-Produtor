@@ -40,11 +40,11 @@ public class UploadController {
     ) throws IOException {
         log.info("Iniciando Chamada com os dados: " + metadataUpload);
         try {
-            Upload metadata = ParceJsonAndValidatorMetadataController.parceJsonUpload(metadataUpload, validator);
+            var metadata = ParceJsonAndValidatorMetadataController.parceJsonToUploadResponseDto(metadataUpload, validator);
             log.info(metadata.toString());
-            UploadResponseDTO savedUpload = uploadPortIn.uploadSQSAndS3(file, metadata);
+            uploadPortIn.uploadService(file, metadata);
 
-            return ResponseEntity.ok(savedUpload);
+            return ResponseEntity.ok().body(metadata);
         } catch (ValidationError e) {
             log.error("Erro: " + e.getErrors());
             throw new ValidationError(e.getErrors());

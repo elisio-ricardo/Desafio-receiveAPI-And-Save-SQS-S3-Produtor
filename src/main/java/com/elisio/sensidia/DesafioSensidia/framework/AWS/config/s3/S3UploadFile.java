@@ -8,8 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 @Slf4j
@@ -24,18 +28,19 @@ public class S3UploadFile {
 
     }
 
-    public void sendFile(MultipartFile file) throws IOException {
+    public void sendFile(MultipartFile file) {
 
         try {
-            log.info("Preparando arquivo para Bucket S3");
-            InputStream inputStream = file.getInputStream();
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType(file.getOriginalFilename());
-            metadata.setContentLength(file.getSize());
+            log.info("Iniciando transformação de request S3");
 
-            PutObjectRequest putObjectRequest = new PutObjectRequest("upload-sensidia", file.getOriginalFilename(), inputStream, metadata);
-            PutObjectResult putObjectResult = amazonS3.putObject(putObjectRequest);
-            log.info(putObjectResult.toString());
+            File convFile = new File(file.getOriginalFilename());
+            FileOutputStream fos = new FileOutputStream(convFile);
+            fos.write(file.getBytes());
+            fos.close();
+            var putObjectRequest = new PutObjectRequest("upload-sensidia", file.getOriginalFilename(), convFile);
+
+            amazonS3.putObject(putObjectRequest);
+            log.info("Foi enviado essa request: " + putObjectRequest);
             log.info("Arquivo enviado com sucesso para o Bucket S3");
 
         } catch (IOException e) {
