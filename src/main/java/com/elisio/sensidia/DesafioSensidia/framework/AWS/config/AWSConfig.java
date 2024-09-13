@@ -3,6 +3,7 @@ package com.elisio.sensidia.DesafioSensidia.framework.AWS.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -30,7 +31,6 @@ public class AWSConfig {
     private String uploadQueueName;
 
 
-
     @Bean
     public SqsAsyncClient sqsAsyncClient() {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
@@ -41,11 +41,11 @@ public class AWSConfig {
     }
 
     @Bean
-    public AmazonS3 amazonS3(){
+    public AmazonS3 amazonS3() {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
 
         return AmazonS3ClientBuilder.standard()
-                .withRegion(String.valueOf(region))
+                .withRegion(Regions.US_EAST_2)
                 .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                 .build();
     }

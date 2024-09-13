@@ -16,4 +16,6 @@ spring:
 
       sqs:
         queue-name: sensidia-metadata
+      s3:
+        bucket-name: upload-sensidia
 

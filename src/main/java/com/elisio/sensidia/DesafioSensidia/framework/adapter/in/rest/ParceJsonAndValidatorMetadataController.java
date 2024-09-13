@@ -1,8 +1,8 @@
 package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.rest;
 
-import com.elisio.sensidia.DesafioSensidia.domain.entities.Upload;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
 import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationError;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.ConstraintViolation;
@@ -10,7 +10,6 @@ import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 
-import java.io.DataInput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.rest;
+package com.elisio.sensidia.DesafioSensidia.framework.exception;
 
 public class ValidationParseJson extends RuntimeException {
 

@@ -2,7 +2,6 @@ package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.rest;
 
 
 import com.elisio.sensidia.DesafioSensidia.application.port.in.UploadPortIn;
-import com.elisio.sensidia.DesafioSensidia.domain.entities.Upload;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
 import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationError;
 import io.swagger.v3.oas.annotations.tags.Tag;

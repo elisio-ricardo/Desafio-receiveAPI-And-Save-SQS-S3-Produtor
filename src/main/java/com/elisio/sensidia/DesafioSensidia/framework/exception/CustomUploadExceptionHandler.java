@@ -1,8 +1,6 @@
 package com.elisio.sensidia.DesafioSensidia.framework.exception;
 
 
-import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.rest.ValidationParseJson;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +29,15 @@ public class CustomUploadExceptionHandler {
     @ExceptionHandler(ValidationParseJson.class)
     public ResponseEntity<ErrosDetail> handleJsonException(ValidationParseJson ex) {
         log.info("Gerando o erro: JsonProcessingException");
+        List<UploadException> errors = new ArrayList<>();
+        errors.add(new UploadException(ex.getError()));
+        ErrosDetail errosDetail = new ErrosDetail(new Date(), HttpStatus.BAD_REQUEST.value(), errors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errosDetail);
+    }
+
+    @ExceptionHandler(DownLoadS3Exception.class)
+    public ResponseEntity<ErrosDetail> downLoadS3Exception(DownLoadS3Exception ex) {
+        log.info("Gerando o erro: DownLoadS3Exception");
         List<UploadException> errors = new ArrayList<>();
         errors.add(new UploadException(ex.getError()));
         ErrosDetail errosDetail = new ErrosDetail(new Date(), HttpStatus.BAD_REQUEST.value(), errors);

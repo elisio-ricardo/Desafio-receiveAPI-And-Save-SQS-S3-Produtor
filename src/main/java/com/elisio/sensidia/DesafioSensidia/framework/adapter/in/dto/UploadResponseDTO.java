@@ -12,13 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UploadResponseDTO {
-
+public class UploadResponseDTO {;
 
     @NotNull(message = "O Objeto User não pode ser null")
     @Valid
     private User user;
-
 
     @NotNull(message = "O Objeto file não pode ser null")
     @Valid
