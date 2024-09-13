@@ -20,10 +20,10 @@ public class SqsProducer {
 
     private final SqsAsyncClient sqsAsyncClient;
 
-
-    public SqsProducer(SqsAsyncClient sqsAsyncClient) {
+    public SqsProducer( SqsAsyncClient sqsAsyncClient) {
         this.sqsAsyncClient = sqsAsyncClient;
     }
+
 
     public CompletableFuture<SendMessageResponse> sendMessage(String message) {
 

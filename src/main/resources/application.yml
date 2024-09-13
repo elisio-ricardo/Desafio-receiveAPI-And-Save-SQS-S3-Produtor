@@ -8,11 +8,12 @@ spring:
   cloud:
     aws:
       credentials:
-        access-key: ${ACCESS_KEY_AWS:x}
-        secret-key: ${SECRET_KEY_AWS:x}
+        access-key: x
+        secret-key: x
       region:
         static: ${REGION_AWS:us-east-2}
       endpoint: x
+
       sqs:
         queue-name: sensidia-metadata
 
