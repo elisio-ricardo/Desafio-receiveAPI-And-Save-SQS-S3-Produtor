@@ -11,7 +11,7 @@ spring:
         access-key: x
         secret-key: x
       region:
-        static: ${REGION_AWS:us-east-2}
+        static: x
       endpoint: x
 
       sqs:

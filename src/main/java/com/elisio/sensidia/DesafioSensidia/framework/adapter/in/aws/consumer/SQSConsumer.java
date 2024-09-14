@@ -1,7 +1,8 @@
-package com.elisio.sensidia.DesafioSensidia.framework.AWS.config.consumer;
+package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.aws.consumer;
 
 
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
+import com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer.ProcessingDynamoDb;
 import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,11 +19,14 @@ public class SQSConsumer {
 
     private final S3Consumer s3Consumer;
 
-    public SQSConsumer(S3Consumer s3Consumer) {
+    private final ProcessingDynamoDb processingDynamoDb;
+
+    public SQSConsumer(S3Consumer s3Consumer, ProcessingDynamoDb processingDynamoDb) {
         this.s3Consumer = s3Consumer;
+        this.processingDynamoDb = processingDynamoDb;
     }
 
-    @SqsListener("sensidia-metadata")
+    @SqsListener("${spring.cloud.aws.sqs.queue-name}")
     public void listen(String message) {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -32,7 +36,9 @@ public class SQSConsumer {
         try {
             var uploadRequestDTO = objectMapper.readValue(message, UploadResponseDTO.class);
             log.info("Mensagem transformada com sucesso para o UploadRequestDto, iniciando chamada para o S3");
-            s3Consumer.downloadFileS3(uploadRequestDTO.getFile().getFileName());
+            var processingResult = s3Consumer.downloadFileS3(uploadRequestDTO.getFile().getFileName());
+            processingDynamoDb.processingDataSqs(uploadRequestDTO, processingResult);
+            log.info("Chuguei depois do dynamoDB");
         } catch (JsonProcessingException e) {
             log.error("Erro ao transformar a mensagem do SQS");
             throw new ValidationParseJson("Error to parse Json: " + e.getOriginalMessage());

@@ -1,4 +1,4 @@
-package com.elisio.sensidia.DesafioSensidia.framework.AWS.config.producer;
+package com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

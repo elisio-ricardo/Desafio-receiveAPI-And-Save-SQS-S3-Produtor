@@ -1,4 +1,4 @@
-package com.elisio.sensidia.DesafioSensidia.framework.AWS.config.producer;
+package com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;

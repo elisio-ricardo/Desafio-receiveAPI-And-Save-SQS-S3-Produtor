@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamoDBDocument
-public class User {
+public class ProcessingResult {
 
-    @NotNull(message = "O campo userId não pode ser null")
-    private String userId;
 
-    @NotNull(message = "O email userId não pode ser null")
-    private String email;
+    @NotNull(message = "O qtdLinhas não pode ser null")
+    private Long qtdLinhas;
+
+    @NotNull(message = "O status não pode ser null")
+    private String status;
 }

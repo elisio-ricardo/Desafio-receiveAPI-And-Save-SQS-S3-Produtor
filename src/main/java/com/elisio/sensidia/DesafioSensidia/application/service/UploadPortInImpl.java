@@ -2,8 +2,8 @@ package com.elisio.sensidia.DesafioSensidia.application.service;
 
 import com.elisio.sensidia.DesafioSensidia.application.port.in.UploadPortIn;
 import com.elisio.sensidia.DesafioSensidia.domain.entities.FileMetadata;
-import com.elisio.sensidia.DesafioSensidia.framework.AWS.config.producer.SqsProducer;
-import com.elisio.sensidia.DesafioSensidia.framework.AWS.config.producer.S3UploadFile;
+import com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer.SqsProducer;
+import com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer.S3UploadFile;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
 import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJson;
 import com.fasterxml.jackson.core.JsonProcessingException;

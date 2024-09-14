@@ -29,7 +29,7 @@ public class ParceJsonAndValidatorMetadataController {
             Set<ConstraintViolation<UploadResponseDTO>> violations = validator.validate(metadata);
 
             if (!violations.isEmpty()) {
-                log.error("Adicionando erros: " + violations.toString());
+                log.error("Adicionando erros de validação: " + violations.toString());
                 List<String> errorMessage = new ArrayList<>();
                 for (ConstraintViolation<UploadResponseDTO> violation : violations) {
                     errorMessage.add(violation.getMessageTemplate());

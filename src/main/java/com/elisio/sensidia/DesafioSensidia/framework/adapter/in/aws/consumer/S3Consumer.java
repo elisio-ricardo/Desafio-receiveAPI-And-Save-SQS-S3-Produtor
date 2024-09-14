@@ -1,10 +1,10 @@
-package com.elisio.sensidia.DesafioSensidia.framework.AWS.config.consumer;
+package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.aws.consumer;
 
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import com.elisio.sensidia.DesafioSensidia.domain.entities.ProcessingResult;
+import com.elisio.sensidia.DesafioSensidia.domain.enums.ResultEnum;
 import com.elisio.sensidia.DesafioSensidia.framework.exception.DownLoadS3Exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ public class S3Consumer {
         this.s3Client = s3Client;
     }
 
-    public void downloadFileS3(String key) throws IOException {
+    public ProcessingResult downloadFileS3(String key) throws IOException {
 
         try {
             log.info("Iniciando Download do file no S3");
@@ -36,20 +36,32 @@ public class S3Consumer {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(s3Object.getObjectContent(), StandardCharsets.UTF_8));
 
-            String line;
-            int lineCount = 0;
-
-            while ((line = reader.readLine()) != null) {
-                lineCount++;
-            }
-
-            log.info("Número total de linhas: " + lineCount);
+            var countLines = countLines(reader);
             reader.close();
             s3Object.close();
+
+            var processingResult = new ProcessingResult();
+            processingResult.setQtdLinhas(countLines);
+            processingResult.setStatus(ResultEnum.CONCLUIDO.toString());
+
+            log.info("Download e processamento do file no S3 concluido");
+            return processingResult;
 
         } catch (Exception e) {
             log.error("Erro ao tentar fazer download no s3");
             throw new DownLoadS3Exception("Error to Download file to S3: " + e.getMessage());
         }
+    }
+
+    private static Long countLines(BufferedReader reader) throws IOException {
+        String line;
+        Long lineCount = 0L;
+
+        while ((line = reader.readLine()) != null) {
+            lineCount++;
+        }
+        log.info("Número total de linhas: " + lineCount);
+
+        return lineCount;
     }
 }
