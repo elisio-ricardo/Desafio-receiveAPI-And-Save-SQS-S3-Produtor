@@ -40,8 +40,18 @@ public class CustomUploadExceptionHandler {
         log.info("Gerando o erro: DownLoadS3Exception");
         List<UploadException> errors = new ArrayList<>();
         errors.add(new UploadException(ex.getError()));
-        ErrosDetail errosDetail = new ErrosDetail(new Date(), HttpStatus.BAD_REQUEST.value(), errors);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errosDetail);
+        ErrosDetail errosDetail = new ErrosDetail(new Date(), HttpStatus.INTERNAL_SERVER_ERROR.value(), errors);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errosDetail);
+    }
+
+
+    @ExceptionHandler(UploadS3Excption.class)
+    public ResponseEntity<ErrosDetail> handleUploadS3Exception(UploadS3Excption ex) {
+        log.info("Gerando o erro: UploadS3Excption");
+        List<UploadException> errors = new ArrayList<>();
+        errors.add(new UploadException(ex.getError()));
+        ErrosDetail errosDetail = new ErrosDetail(new Date(), HttpStatus.INTERNAL_SERVER_ERROR.value(), errors);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errosDetail);
     }
 
 

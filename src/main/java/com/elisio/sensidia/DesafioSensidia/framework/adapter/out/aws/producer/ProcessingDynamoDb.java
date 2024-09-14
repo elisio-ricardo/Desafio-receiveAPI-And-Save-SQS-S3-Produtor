@@ -23,10 +23,12 @@ public class ProcessingDynamoDb {
 
         log.info("Cheguei na classe ProcessingDynamoDb ");
         var resultDetail = new UploadResponseDynamoDbDTO();
-        resultDetail.setUserId(uploadRequestDTO.getUser().getEmail());
-        resultDetail.setFile(uploadRequestDTO.getFile());
-        resultDetail.setUser(uploadRequestDTO.getUser());
-        resultDetail.setProcessingResult(processingResult);
+        //resultDetail.setUserId(uploadRequestDTO.getUser().getEmail());
+        resultDetail.setUserId(uploadRequestDTO.getUser().getUserId());
+        resultDetail.setFileName(uploadRequestDTO.getFile().getFileName());
+        resultDetail.setFileSize(uploadRequestDTO.getFile().getFileSize());
+        resultDetail.setProcessingResult(processingResult.getQtdLinhas());
+        resultDetail.setStatus(processingResult.getStatus());
         log.info("iniciando save no dynamoDB");
         dbMapper.save(resultDetail);
 

@@ -8,14 +8,14 @@ spring:
   cloud:
     aws:
       credentials:
-        access-key: x
+        access-key: Ax
         secret-key: x
       region:
         static: x
       endpoint: x
 
       sqs:
-        queue-name: sensidia-metadata
+        queue-name: x
       s3:
-        bucket-name: upload-sensidia
+        bucket-name: x
 

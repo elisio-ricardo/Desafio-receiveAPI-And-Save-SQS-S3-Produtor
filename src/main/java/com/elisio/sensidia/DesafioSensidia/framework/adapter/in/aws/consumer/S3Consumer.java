@@ -42,7 +42,7 @@ public class S3Consumer {
 
             var processingResult = new ProcessingResult();
             processingResult.setQtdLinhas(countLines);
-            processingResult.setStatus(ResultEnum.CONCLUIDO.toString());
+            processingResult.setStatus(ResultEnum.CONCLUIDO);
 
             log.info("Download e processamento do file no S3 concluido");
             return processingResult;

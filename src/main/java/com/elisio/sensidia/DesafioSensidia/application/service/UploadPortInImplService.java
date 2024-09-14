@@ -1,10 +1,12 @@
 package com.elisio.sensidia.DesafioSensidia.application.service;
 
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.elisio.sensidia.DesafioSensidia.application.port.in.UploadPortIn;
 import com.elisio.sensidia.DesafioSensidia.domain.entities.FileMetadata;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer.SqsProducer;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer.S3UploadFile;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.UploadS3Excption;
 import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,12 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Slf4j
-public class UploadPortInImpl implements UploadPortIn {
+public class UploadPortInImplService implements UploadPortIn {
 
     private final SqsProducer sqsProducer;
     private final S3UploadFile s3UploadFile;
 
-    public UploadPortInImpl(SqsProducer sqsProducer, S3UploadFile s3UploadFile) {
+    public UploadPortInImplService(SqsProducer sqsProducer, S3UploadFile s3UploadFile) {
         this.sqsProducer = sqsProducer;
         this.s3UploadFile = s3UploadFile;
     }
@@ -30,20 +32,24 @@ public class UploadPortInImpl implements UploadPortIn {
         ObjectMapper objectMapper = new ObjectMapper();
         log.info("Iniciando upload service");
         validateNameFile(file, metadata);
-        s3UploadFile.sendFile(file);
+        PutObjectResult putObjectResult = s3UploadFile.sendFile(file);
 
-        try {
-            String jsonMetadata = objectMapper.writeValueAsString(metadata);
-            log.info("Objeto transformado: " + jsonMetadata);
-            sqsProducer.sendMessage(jsonMetadata);
-        } catch (JsonProcessingException e) {
-            throw new ValidationParseJson(e.getOriginalMessage());
+        if (putObjectResult != null) {
+            try {
+                String jsonMetadata = objectMapper.writeValueAsString(metadata);
+                log.info("Objeto transformado: " + jsonMetadata);
+                sqsProducer.sendMessage(jsonMetadata);
+            } catch (JsonProcessingException e) {
+                throw new ValidationParseJson(e.getOriginalMessage());
+            }
+        } else {
+            throw new UploadS3Excption("Erro ao enviar o arquivo para o Buckt S3");
         }
 
     }
 
     private static void validateNameFile(MultipartFile file, UploadResponseDTO metadata) {
-        if( !metadata.getFile().getFileName().equals(file.getOriginalFilename())){
+        if (!metadata.getFile().getFileName().equals(file.getOriginalFilename())) {
             var newFile = new FileMetadata();
             newFile.setFileName(file.getOriginalFilename());
             newFile.setFileSize(file.getSize());
@@ -51,7 +57,7 @@ public class UploadPortInImpl implements UploadPortIn {
             metadata.setFile(newFile);
 
             log.info("ALterando o nome do file: " + metadata.toString());
-         } else {
+        } else {
             log.info("Nome correto, não necessario alterar");
         }
     }

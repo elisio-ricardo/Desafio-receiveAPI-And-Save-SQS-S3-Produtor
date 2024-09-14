@@ -1,17 +1,13 @@
 package com.elisio.sensidia.DesafioSensidia.domain.entities;
 
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamoDBDocument
 public class FileMetadata {
 
     @NotNull(message = "O campo fileName não pode ser null")
@@ -25,7 +21,7 @@ public class FileMetadata {
     @NotNull(message = "O fileSize não pode ser null")
     private Long fileSize;
 
-    @DynamoDBAttribute(attributeName = "fileName")
+
     public String getFileName() {
         return fileName;
     }
@@ -34,7 +30,7 @@ public class FileMetadata {
         this.fileName = fileName;
     }
 
-    @DynamoDBAttribute(attributeName = "fileType")
+
     public String getFileType() {
         return fileType;
     }
@@ -43,7 +39,7 @@ public class FileMetadata {
         this.fileType = fileType;
     }
 
-    @DynamoDBAttribute(attributeName = "fileSize")
+
     public Long getFileSize() {
         return fileSize;
     }
