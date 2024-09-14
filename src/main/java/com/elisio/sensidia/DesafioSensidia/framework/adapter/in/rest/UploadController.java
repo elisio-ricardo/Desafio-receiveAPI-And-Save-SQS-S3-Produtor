@@ -42,7 +42,7 @@ public class UploadController {
             var metadata = ParceJsonAndValidatorMetadataController.parceJsonToUploadResponseDto(metadataUpload, validator);
             log.info(metadata.toString());
             uploadPortIn.uploadService(file, metadata);
-
+            log.info("Chamada para inserção da request de processing de dados concluida");
             return ResponseEntity.ok().body(metadata);
         } catch (ValidationError e) {
             log.error("Erro: " + e.getErrors());

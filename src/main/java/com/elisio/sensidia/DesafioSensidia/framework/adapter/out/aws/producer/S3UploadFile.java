@@ -28,7 +28,6 @@ public class S3UploadFile {
 
     public PutObjectResult sendFile(MultipartFile file) {
 
-
         PutObjectResult putObjectResult = null;
         try {
             log.info("Iniciando transformação do arquivo para enviar ao S3");

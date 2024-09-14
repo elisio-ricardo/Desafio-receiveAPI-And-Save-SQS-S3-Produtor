@@ -8,7 +8,7 @@ spring:
   cloud:
     aws:
       credentials:
-        access-key: Ax
+        access-key: x
         secret-key: x
       region:
         static: x
@@ -18,4 +18,9 @@ spring:
         queue-name: x
       s3:
         bucket-name: x
+      sns:
+        topic:
+          book-topic:
+            arn: x
+
 

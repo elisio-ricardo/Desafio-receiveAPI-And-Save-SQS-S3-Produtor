@@ -19,11 +19,10 @@ public class ProcessingDynamoDb {
     }
 
 
-    public void processingDataSqs(UploadResponseDTO uploadRequestDTO, ProcessingResult processingResult) {
+    public UploadResponseDynamoDbDTO processingDataSqs(UploadResponseDTO uploadRequestDTO, ProcessingResult processingResult) {
 
         log.info("Cheguei na classe ProcessingDynamoDb ");
         var resultDetail = new UploadResponseDynamoDbDTO();
-        //resultDetail.setUserId(uploadRequestDTO.getUser().getEmail());
         resultDetail.setUserId(uploadRequestDTO.getUser().getUserId());
         resultDetail.setFileName(uploadRequestDTO.getFile().getFileName());
         resultDetail.setFileSize(uploadRequestDTO.getFile().getFileSize());
@@ -32,7 +31,10 @@ public class ProcessingDynamoDb {
         log.info("iniciando save no dynamoDB");
         dbMapper.save(resultDetail);
 
-        System.out.println("Testando");
+
+        log.info("Mensagem enviada com sucesso: " + resultDetail.getFileId());
+
+        return  resultDetail;
     }
 
 }
