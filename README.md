@@ -13,3 +13,9 @@
 ## Produção
 
 ### Após o recebimento da requisição, é enviado o arquivo do relatorio para o bucket S3 e os metadatas  da requisição de processamento para a fila SQS 
+
+## Consumo
+
+A api fica escutando a a fila SQS, quando chega uma solicitação de processamento, ela pega o nome do arquivo que esta dentro do corpo da mensagem e faz o download do arquivo que esta no S3
+
+Faz o processamento do arquivo e conta a quantidade de linhas que tem no arquivo, gera um relatorio e envia para o topico SNS
