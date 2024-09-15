@@ -19,3 +19,9 @@
 ### A api fica escutando a a fila SQS, quando chega uma solicitação de processamento, ela pega o nome do arquivo que esta dentro do corpo da mensagem e faz o download do arquivo que esta no S3
 
 ### Faz o processamento do arquivo e conta a quantidade de linhas que tem no arquivo, gera um relatorio e envia para o topico SNS
+
+## Desenho da Solução
+
+![image](https://github.com/user-attachments/assets/487d7beb-c6fd-48a7-a76c-98ca30770c8f)
+
+
