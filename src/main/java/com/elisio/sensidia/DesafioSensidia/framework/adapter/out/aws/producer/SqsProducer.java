@@ -36,14 +36,14 @@ public class SqsProducer {
 
         sendMessageResponseCompletableFuture
                 .thenAccept(sendMessageResponse -> {
-                    log.info("Message sent successfully. Message ID: " + sendMessageResponse.messageId());
+                    log.info("Mensagem enviada com sucesso. ID da mensagem: " + sendMessageResponse.messageId());
                 })
                 .exceptionally(throwable -> {
                     if (throwable instanceof SqsException) {
                         SqsException sqsException = (SqsException) throwable;
-                        log.error("Failed to send message. Error message: " + sqsException.awsErrorDetails().errorMessage());
+                        log.error("Falha ao enviar mensagem. Mensagem de erro: " + sqsException.awsErrorDetails().errorMessage());
                     } else {
-                        log.error("Unexpected error occurred: " + throwable.getMessage());
+                        log.error("Ocorreu um erro inesperado: " + throwable.getMessage());
                     }
                     return null;
                 });

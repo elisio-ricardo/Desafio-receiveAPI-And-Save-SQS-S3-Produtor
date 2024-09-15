@@ -29,12 +29,15 @@ public class UploadPortInImplService implements UploadPortIn {
 
     @Override
     public void uploadService(MultipartFile file, UploadResponseDTO metadata) {
+        log.info(file.toString());
         ObjectMapper objectMapper = new ObjectMapper();
         log.info("Iniciando upload service");
         validateNameFile(file, metadata);
         PutObjectResult putObjectResult = s3UploadFile.sendFile(file);
 
+
         if (putObjectResult != null) {
+            log.info("Arquivo enviado ao S3 com sucesso");
             try {
                 String jsonMetadata = objectMapper.writeValueAsString(metadata);
                 log.info("Objeto transformado: " + jsonMetadata);
@@ -46,9 +49,11 @@ public class UploadPortInImplService implements UploadPortIn {
             throw new AwsException("Erro ao enviar o arquivo para o Bucket S3");
         }
 
+        log.info("Arquivo enviado ao S3 e mensagem ao SQS com sucesso");
+
     }
 
-    private static void validateNameFile(MultipartFile file, UploadResponseDTO metadata) {
+    private void validateNameFile(MultipartFile file, UploadResponseDTO metadata) {
         if (!metadata.getFile().getFileName().equals(file.getOriginalFilename())) {
             var newFile = new FileMetadata();
             newFile.setFileName(file.getOriginalFilename());

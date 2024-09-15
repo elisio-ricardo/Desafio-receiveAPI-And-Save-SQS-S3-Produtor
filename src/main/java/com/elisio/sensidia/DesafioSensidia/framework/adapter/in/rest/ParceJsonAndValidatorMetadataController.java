@@ -19,8 +19,20 @@ import java.util.Set;
 @Validated
 public class ParceJsonAndValidatorMetadataController {
 
-    public static UploadResponseDTO parceJsonToUploadResponseDto(String metadataUpload, Validator validator) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper;
+    private Validator validator;
+
+    public ParceJsonAndValidatorMetadataController() {
+    }
+
+    public ParceJsonAndValidatorMetadataController(ObjectMapper objectMapper, Validator validator) {
+        this.objectMapper = objectMapper;
+        this.validator = validator;
+    }
+
+
+    public UploadResponseDTO parceJsonToUploadResponseDto(String metadataUpload) {
+
 
         try {
             log.info("Iniciando a transformação do json e validação dos campos");

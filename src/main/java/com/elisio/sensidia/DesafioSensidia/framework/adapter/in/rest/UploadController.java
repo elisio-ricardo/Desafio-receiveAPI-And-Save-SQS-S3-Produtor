@@ -21,16 +21,11 @@ import java.io.IOException;
 @Validated
 public class UploadController {
 
-
-    private final Validator validator;
-
     private final UploadPortIn uploadPortIn;
 
-    public UploadController(Validator validator, UploadPortIn uploadPortIn) {
-        this.validator = validator;
+    public UploadController(UploadPortIn uploadPortIn) {
         this.uploadPortIn = uploadPortIn;
     }
-
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<UploadResponseDTO> uploadFile(
@@ -38,8 +33,9 @@ public class UploadController {
             @RequestPart("metadataUpload") String metadataUpload
     ) throws IOException {
         log.info("Iniciando Chamada com os dados: " + metadataUpload);
+        ParceJsonAndValidatorMetadataController validatorMetadata = new ParceJsonAndValidatorMetadataController();
         try {
-            var metadata = ParceJsonAndValidatorMetadataController.parceJsonToUploadResponseDto(metadataUpload, validator);
+            var metadata = validatorMetadata.parceJsonToUploadResponseDto(metadataUpload);
             log.info(metadata.toString());
             uploadPortIn.uploadService(file, metadata);
             log.info("Chamada para inserção da request de processing de dados concluida");

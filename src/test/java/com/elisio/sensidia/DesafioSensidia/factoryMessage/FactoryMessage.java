@@ -1,5 +1,8 @@
 package com.elisio.sensidia.DesafioSensidia.factoryMessage;
 
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.S3Object;
 import com.elisio.sensidia.DesafioSensidia.domain.entities.FileMetadata;
 import com.elisio.sensidia.DesafioSensidia.domain.entities.ProcessingResult;
 import com.elisio.sensidia.DesafioSensidia.domain.entities.User;
@@ -8,6 +11,10 @@ import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadRespon
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDynamoDbDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayInputStream;
 
 public class FactoryMessage {
 
@@ -16,6 +23,21 @@ public class FactoryMessage {
         ObjectMapper mapper = new ObjectMapper();
 
         var uploadResponseDTO = getUploadResponseDTO();
+
+        try {
+            return mapper.writeValueAsString(uploadResponseDTO);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static String parseUploadResponseDtoToStringWithSomeFieldNull() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        var uploadResponseDTO = getUploadResponseDTO();
+        FileMetadata file = new FileMetadata();
+        uploadResponseDTO.setFile(file);
 
         try {
             return mapper.writeValueAsString(uploadResponseDTO);
@@ -62,6 +84,47 @@ public class FactoryMessage {
         resultDetail.setStatus(processingResult.getStatus());
 
         return resultDetail;
+    }
+
+    public static MultipartFile getFile(){
+        byte[] content = "Este é o conteúdo do arquivo".getBytes();
+
+        MultipartFile file =
+                new MockMultipartFile("file","textfile.txt","text/plain", content );
+
+        return file;
+    }
+
+    public static PutObjectResult getPutObjectResult() {
+        PutObjectResult putObjectResult = new PutObjectResult();
+
+        putObjectResult.setETag("123456789abcdef");
+        putObjectResult.setVersionId("1");
+        putObjectResult.setExpirationTime(null);
+        putObjectResult.setContentMd5("abc123def456ghi789");
+
+        return putObjectResult;
+    }
+
+
+    public static S3Object getS3Object() {
+        S3Object s3Object = new S3Object();
+
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(1024);
+        metadata.setContentType("application/pdf");
+
+
+        String fileContent = "Este é o conteúdo do arquivo.";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(fileContent.getBytes());
+
+        s3Object.setObjectMetadata(metadata);
+        s3Object.setObjectContent(inputStream);
+
+        s3Object.setKey("teste.pdf");
+        s3Object.setBucketName("bucket-de-teste");
+
+        return s3Object;
     }
 
 }
