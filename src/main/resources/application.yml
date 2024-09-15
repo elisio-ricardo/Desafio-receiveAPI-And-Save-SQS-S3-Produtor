@@ -5,6 +5,22 @@ spring:
   application:
     name: desafioAWS
 
+  cloud:
+    aws:
+      credentials:
+        access-key: x
+        secret-key: x
+      region:
+        static: x
+      endpoint: x
 
+      sqs:
+        queue-name: x
+      s3:
+        bucket-name: x
+      sns:
+        topic:
+          book-topic:
+            arn: x
 
 

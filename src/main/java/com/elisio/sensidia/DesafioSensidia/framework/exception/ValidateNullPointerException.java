@@ -1,5 +1,9 @@
 package com.elisio.sensidia.DesafioSensidia.framework.exception;
 
+
+import lombok.Data;
+
+@Data
 public class ValidateNullPointerException extends RuntimeException {
 
     private String error;
@@ -8,7 +12,5 @@ public class ValidateNullPointerException extends RuntimeException {
         this.error = message;
     }
 
-    public String getError() {
-        return error;
-    }
+
 }

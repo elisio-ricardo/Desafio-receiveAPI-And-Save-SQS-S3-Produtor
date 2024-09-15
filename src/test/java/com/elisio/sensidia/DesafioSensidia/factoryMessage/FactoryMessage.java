@@ -61,7 +61,7 @@ public class FactoryMessage {
 
         user.setUserId("user123");
         user.setEmail("user5@example.com");
-        fileMetadata.setFileName("DesafioSensedia-ServiçodeGestãodeProcessamentodeArquivos.pdf");
+        fileMetadata.setFileName("textfile.txt");
         fileMetadata.setFileType("application/pdf");
         fileMetadata.setFileSize(52728L);
         uploadResponseDTO.setFile(fileMetadata);

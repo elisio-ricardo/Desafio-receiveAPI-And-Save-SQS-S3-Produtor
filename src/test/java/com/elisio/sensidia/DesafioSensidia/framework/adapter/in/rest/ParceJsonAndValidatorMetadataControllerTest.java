@@ -3,7 +3,6 @@ package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.rest;
 import com.elisio.sensidia.DesafioSensidia.domain.entities.FileMetadata;
 import com.elisio.sensidia.DesafioSensidia.factoryMessage.FactoryMessage;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
-import com.elisio.sensidia.DesafioSensidia.framework.exception.AwsException;
 import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationErrorException;
 import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJsonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

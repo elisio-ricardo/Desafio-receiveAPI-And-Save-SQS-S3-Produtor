@@ -10,5 +10,5 @@ import java.io.IOException;
 @Service
 public interface UploadPortIn {
 
-   void uploadService(MultipartFile file, UploadResponseDTO metadata) throws IOException;
+   void uploadService(MultipartFile file, UploadResponseDTO metadata);
 }

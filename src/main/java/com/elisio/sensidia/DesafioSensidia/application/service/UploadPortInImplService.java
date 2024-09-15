@@ -48,7 +48,6 @@ public class UploadPortInImplService implements UploadPortIn {
         } else {
             throw new AwsException("Erro ao enviar o arquivo para o Bucket S3");
         }
-
         log.info("Arquivo enviado ao S3 e mensagem ao SQS com sucesso");
 
     }

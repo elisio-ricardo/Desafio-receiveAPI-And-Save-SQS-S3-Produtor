@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class CustomUploadExceptionHandler {
 
     @ExceptionHandler(ValidationErrorException.class)
-    public ResponseEntity<ErrosDetail> handleUploadException(ValidationErrorException ex) {
+    public ResponseEntity<ErrosDetail> handleValidationErrorException(ValidationErrorException ex) {
         log.info("Gerando o erro: ValidationError");
         List<UploadException> errors = ex.getErrors().stream().
                 map(erro -> new UploadException(erro))

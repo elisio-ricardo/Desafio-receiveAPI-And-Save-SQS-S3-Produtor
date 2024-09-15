@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
@@ -17,22 +18,19 @@ import java.util.Set;
 
 @Slf4j
 @Validated
+@Service
 public class ParceJsonAndValidatorMetadataController {
 
-    private ObjectMapper objectMapper;
-    private Validator validator;
+    private final ObjectMapper objectMapper;
+    private final Validator validator;
 
-    public ParceJsonAndValidatorMetadataController() {
-    }
 
     public ParceJsonAndValidatorMetadataController(ObjectMapper objectMapper, Validator validator) {
         this.objectMapper = objectMapper;
         this.validator = validator;
     }
 
-
     public UploadResponseDTO parceJsonToUploadResponseDto(String metadataUpload) {
-
 
         try {
             log.info("Iniciando a transformação do json e validação dos campos");
