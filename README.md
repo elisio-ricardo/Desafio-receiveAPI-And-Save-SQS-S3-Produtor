@@ -6,7 +6,7 @@
 
 ### Exemplo de Curl:
 
-### curl --location 'http://localhost:8080/uploads' \
+--location 'http://localhost:8080/uploads' \
 --form 'file=@"/C:/"seu path"/x/x/DesafioSensedia-ServiçodeGestãodeProcessamentodeArquivos.pdf"' \
 --form 'metadataUpload="{ \"user\": {  \"userId\": \"user123\", \"email\": \"user5@example.com\"  }, \"file\": {  \"fileName\": \"document.txt\", \"fileType\": \"text/plain\", \"fileSize\": 1024  }}"'
 
