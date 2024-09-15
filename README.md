@@ -22,6 +22,7 @@
 
 ## Desenho da Solução
 
-![image](https://github.com/user-attachments/assets/487d7beb-c6fd-48a7-a76c-98ca30770c8f)
+
+![image](https://github.com/user-attachments/assets/7719a509-68aa-478d-ba70-43efd7e98fad)
 
 
