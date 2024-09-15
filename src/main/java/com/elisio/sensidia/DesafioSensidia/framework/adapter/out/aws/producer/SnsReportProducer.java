@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class SnsReportProducer {
-
     private final AmazonSNS snsClient;
     Topic bookTopic;
 

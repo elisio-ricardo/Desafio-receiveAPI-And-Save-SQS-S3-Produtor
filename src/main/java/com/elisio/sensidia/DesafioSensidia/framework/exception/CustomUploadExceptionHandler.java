@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CustomUploadExceptionHandler {
 
-    @ExceptionHandler(ValidationError.class)
-    public ResponseEntity<ErrosDetail> handleUploadException(ValidationError ex) {
+    @ExceptionHandler(ValidationErrorException.class)
+    public ResponseEntity<ErrosDetail> handleUploadException(ValidationErrorException ex) {
         log.info("Gerando o erro: ValidationError");
         List<UploadException> errors = ex.getErrors().stream().
                 map(erro -> new UploadException(erro))
@@ -26,8 +26,8 @@ public class CustomUploadExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errosDetail);
     }
 
-    @ExceptionHandler(ValidationParseJson.class)
-    public ResponseEntity<ErrosDetail> handleJsonException(ValidationParseJson ex) {
+    @ExceptionHandler(ValidationParseJsonException.class)
+    public ResponseEntity<ErrosDetail> handleJsonException(ValidationParseJsonException ex) {
         log.info("Gerando o erro: JsonProcessingException");
         List<UploadException> errors = new ArrayList<>();
         errors.add(new UploadException(ex.getError()));
@@ -35,19 +35,10 @@ public class CustomUploadExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errosDetail);
     }
 
-    @ExceptionHandler(DownLoadS3Exception.class)
-    public ResponseEntity<ErrosDetail> downLoadS3Exception(DownLoadS3Exception ex) {
-        log.info("Gerando o erro: DownLoadS3Exception");
-        List<UploadException> errors = new ArrayList<>();
-        errors.add(new UploadException(ex.getError()));
-        ErrosDetail errosDetail = new ErrosDetail(new Date(), HttpStatus.INTERNAL_SERVER_ERROR.value(), errors);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errosDetail);
-    }
 
-
-    @ExceptionHandler(UploadS3Excption.class)
-    public ResponseEntity<ErrosDetail> handleUploadS3Exception(UploadS3Excption ex) {
-        log.info("Gerando o erro: UploadS3Excption");
+    @ExceptionHandler(AwsException.class)
+    public ResponseEntity<ErrosDetail> handleAwsExceptionException(AwsException ex) {
+        log.info("Gerando o erro: UploadDynamoDbException");
         List<UploadException> errors = new ArrayList<>();
         errors.add(new UploadException(ex.getError()));
         ErrosDetail errosDetail = new ErrosDetail(new Date(), HttpStatus.INTERNAL_SERVER_ERROR.value(), errors);

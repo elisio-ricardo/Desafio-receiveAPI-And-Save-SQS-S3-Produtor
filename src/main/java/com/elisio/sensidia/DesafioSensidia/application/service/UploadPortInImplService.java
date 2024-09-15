@@ -6,8 +6,8 @@ import com.elisio.sensidia.DesafioSensidia.domain.entities.FileMetadata;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer.SqsProducer;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer.S3UploadFile;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
-import com.elisio.sensidia.DesafioSensidia.framework.exception.UploadS3Excption;
-import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJson;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.AwsException;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJsonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -40,10 +40,10 @@ public class UploadPortInImplService implements UploadPortIn {
                 log.info("Objeto transformado: " + jsonMetadata);
                 sqsProducer.sendMessage(jsonMetadata);
             } catch (JsonProcessingException e) {
-                throw new ValidationParseJson(e.getOriginalMessage());
+                throw new ValidationParseJsonException(e.getOriginalMessage());
             }
         } else {
-            throw new UploadS3Excption("Erro ao enviar o arquivo para o Buckt S3");
+            throw new AwsException("Erro ao enviar o arquivo para o Bucket S3");
         }
 
     }

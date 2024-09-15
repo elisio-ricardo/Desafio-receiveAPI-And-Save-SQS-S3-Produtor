@@ -1,9 +1,9 @@
 package com.elisio.sensidia.DesafioSensidia.framework.exception;
 
-public class DownLoadS3Exception extends RuntimeException {
-    private String error;
+public class ValidationParseJsonException extends RuntimeException {
 
-    public DownLoadS3Exception(String message) {
+    private String error;
+    public ValidationParseJsonException(String message) {
         this.error = message;
     }
 

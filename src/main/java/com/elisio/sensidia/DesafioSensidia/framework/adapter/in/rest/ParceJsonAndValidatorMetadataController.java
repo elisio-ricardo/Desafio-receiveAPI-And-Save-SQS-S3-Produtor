@@ -1,8 +1,8 @@
 package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.rest;
 
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
-import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationError;
-import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJson;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationErrorException;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationParseJsonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.ConstraintViolation;
@@ -34,13 +34,13 @@ public class ParceJsonAndValidatorMetadataController {
                 for (ConstraintViolation<UploadResponseDTO> violation : violations) {
                     errorMessage.add(violation.getMessageTemplate());
                 }
-                throw new ValidationError(errorMessage);
+                throw new ValidationErrorException(errorMessage);
             }
 
             return metadata;
 
         } catch (JsonProcessingException e) {
-            throw new ValidationParseJson("Error to parse Json: " + e.getOriginalMessage());
+            throw new ValidationParseJsonException("Error to parse Json: " + e.getOriginalMessage());
         }
 
 

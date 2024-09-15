@@ -1,9 +1,10 @@
 package com.elisio.sensidia.DesafioSensidia.framework.exception;
 
-public class ValidationParseJson extends RuntimeException {
+public class ValidateNullPointerException extends RuntimeException {
 
     private String error;
-    public ValidationParseJson(String message) {
+
+    public ValidateNullPointerException(String message) {
         this.error = message;
     }
 

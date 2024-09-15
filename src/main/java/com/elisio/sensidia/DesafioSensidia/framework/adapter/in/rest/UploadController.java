@@ -3,7 +3,7 @@ package com.elisio.sensidia.DesafioSensidia.framework.adapter.in.rest;
 
 import com.elisio.sensidia.DesafioSensidia.application.port.in.UploadPortIn;
 import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
-import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationError;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.ValidationErrorException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +44,9 @@ public class UploadController {
             uploadPortIn.uploadService(file, metadata);
             log.info("Chamada para inserção da request de processing de dados concluida");
             return ResponseEntity.ok().body(metadata);
-        } catch (ValidationError e) {
+        } catch (ValidationErrorException e) {
             log.error("Erro: " + e.getErrors());
-            throw new ValidationError(e.getErrors());
+            throw new ValidationErrorException(e.getErrors());
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.elisio.sensidia.DesafioSensidia.framework.exception;
 
-public class UploadS3Excption extends RuntimeException {
+public class AwsException extends RuntimeException {
     private String error;
 
-    public UploadS3Excption(String message) {
+    public AwsException(String message) {
         this.error = message;
     }
 
@@ -12,4 +12,3 @@ public class UploadS3Excption extends RuntimeException {
     }
 
 }
-

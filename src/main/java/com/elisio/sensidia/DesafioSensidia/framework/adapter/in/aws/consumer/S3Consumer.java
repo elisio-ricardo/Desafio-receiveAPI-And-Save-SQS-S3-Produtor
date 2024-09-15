@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.elisio.sensidia.DesafioSensidia.domain.entities.ProcessingResult;
 import com.elisio.sensidia.DesafioSensidia.domain.enums.ResultEnum;
-import com.elisio.sensidia.DesafioSensidia.framework.exception.DownLoadS3Exception;
+import com.elisio.sensidia.DesafioSensidia.framework.exception.AwsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class S3Consumer {
         this.s3Client = s3Client;
     }
 
-    public ProcessingResult downloadFileS3(String key) throws IOException {
+    public ProcessingResult downloadFileS3(String key)  {
 
         try {
             log.info("Iniciando Download do file no S3");
@@ -49,7 +49,7 @@ public class S3Consumer {
 
         } catch (Exception e) {
             log.error("Erro ao tentar fazer download no s3");
-            throw new DownLoadS3Exception("Error to Download file to S3: " + e.getMessage());
+            throw new AwsException("Error to Download file to S3: " + e.getMessage());
         }
     }
 
