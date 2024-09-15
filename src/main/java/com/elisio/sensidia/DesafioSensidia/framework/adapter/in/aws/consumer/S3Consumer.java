@@ -48,7 +48,7 @@ public class S3Consumer {
             return processingResult;
 
         } catch (Exception e) {
-            log.error("Erro ao tentar fazer download no s3");
+            log.error("Erro ao tentar fazer download no s3: " + e.getMessage());
             throw new AwsException("Error to Download file to S3: " + e.getMessage());
         }
     }

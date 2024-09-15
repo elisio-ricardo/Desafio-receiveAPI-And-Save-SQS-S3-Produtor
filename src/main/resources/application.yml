@@ -22,5 +22,6 @@ spring:
         topic:
           book-topic:
             arn: x
-
-
+logging:
+  level:
+    org.springframework.retry: x

@@ -20,6 +20,7 @@ public class SQSConsumer {
 
     @SqsListener("${spring.cloud.aws.sqs.queue-name}")
     public void listen(String message) {
+        log.info("------------------------------------------------------------INICIANDO 2° ETAPA PROCESSANDO MSGS DO SQS ------------------------------------------------------------");
         log.info("Consumindo fila SQS com a message: " + message);
         processingMessageSQS.processingMessageSQS(message);
     }
