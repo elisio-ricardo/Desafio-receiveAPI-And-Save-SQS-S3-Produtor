@@ -19,7 +19,7 @@
 
 ### A api fica escutando a a fila SQS, quando chega uma solicitação de processamento, ela pega o nome do arquivo que esta dentro do corpo da mensagem e faz o download do arquivo que esta no S3
 
-## 🟥🟥 Importante: a mensagem tem um Reetry de 3 tentativas após isso ela será enviada para o DLQ 🟥🟥
+### 🟥🟥 Importante: a mensagem tem um Reetry de 3 tentativas após isso ela será enviada para o DLQ 🟥🟥
 
 
 
