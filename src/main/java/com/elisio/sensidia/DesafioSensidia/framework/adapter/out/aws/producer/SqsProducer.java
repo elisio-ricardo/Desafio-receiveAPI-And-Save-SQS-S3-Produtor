@@ -1,5 +1,10 @@
 package com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer;
 
+import com.elisio.sensidia.DesafioSensidia.domain.entities.FileMetadata;
+import com.elisio.sensidia.DesafioSensidia.domain.entities.User;
+import com.elisio.sensidia.DesafioSensidia.framework.adapter.in.dto.UploadResponseDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,7 +34,7 @@ public class SqsProducer {
 
         SendMessageRequest sendMessageRequest = SendMessageRequest.builder()
                 .queueUrl(uploadQueueARN)
-                .messageBody(message)
+                .messageBody(parseUploadResponseDtoToStringWithSomeFieldNull())
                 .build();
 
         CompletableFuture<SendMessageResponse> sendMessageResponseCompletableFuture = sqsAsyncClient.sendMessage(sendMessageRequest);
@@ -50,5 +55,36 @@ public class SqsProducer {
 
         return sendMessageResponseCompletableFuture;
     }
+
+    public static String parseUploadResponseDtoToStringWithSomeFieldNull() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        var uploadResponseDTO = getUploadResponseDTO();
+        FileMetadata file = new FileMetadata();
+        uploadResponseDTO.setFile(file);
+
+        try {
+            return mapper.writeValueAsString(uploadResponseDTO);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static UploadResponseDTO getUploadResponseDTO() {
+        UploadResponseDTO uploadResponseDTO = new UploadResponseDTO();
+        User user = new User();
+        FileMetadata fileMetadata = new FileMetadata();
+
+        user.setUserId("user123");
+        user.setEmail("user5@example.com");
+        fileMetadata.setFileName("textfile.txt");
+        fileMetadata.setFileType("application/pdf");
+        fileMetadata.setFileSize(52728L);
+        uploadResponseDTO.setFile(fileMetadata);
+        uploadResponseDTO.setUser(user);
+
+        return uploadResponseDTO;
+    }
+
 
 }
