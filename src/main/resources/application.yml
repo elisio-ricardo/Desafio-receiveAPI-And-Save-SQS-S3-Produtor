@@ -13,7 +13,6 @@ spring:
       region:
         static: x
       endpoint: x
-
       sqs:
         queue-name: x
       s3:
