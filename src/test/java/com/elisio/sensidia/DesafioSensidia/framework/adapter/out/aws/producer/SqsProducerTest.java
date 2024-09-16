@@ -1,7 +1,7 @@
 package com.elisio.sensidia.DesafioSensidia.framework.adapter.out.aws.producer;
 
+
 import com.elisio.sensidia.DesafioSensidia.factoryMessage.FactoryMessage;
-import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +16,6 @@ import software.amazon.awssdk.services.sqs.model.SendMessageResponse;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
@@ -25,7 +23,6 @@ import static org.mockito.Mockito.*;
 class SqsProducerTest {
 
 
-    EasyRandom easy = new EasyRandom();
     @Mock
     private SqsAsyncClient sqsAsyncClient;
 

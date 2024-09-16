@@ -18,10 +18,7 @@ spring:
         queue-name: x
       s3:
         bucket-name: x
-      sns:
-        topic:
-          book-topic:
-            arn: x
+
 logging:
   level:
-    org.springframework.retry: x
+    org.springframework.retry: DEBUG

@@ -37,9 +37,6 @@ public class AWSConfig {
     private String uploadQueueName;
 
 
-    @Value("${spring.cloud.aws.sns.topic.book-topic.arn}")
-    private String bookTopicArn;
-
 
     @Bean
     public SqsAsyncClient sqsAsyncClient() {
@@ -57,37 +54,6 @@ public class AWSConfig {
                 .withRegion(Regions.US_EAST_2)
                 .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                 .build();
-    }
-
-    @Bean
-    public DynamoDBMapper dbMapper() {
-        return new DynamoDBMapper(amazonDynamoDB());
-    }
-
-    @Bean
-    public AmazonDynamoDB amazonDynamoDB() {
-        return AmazonDynamoDBClientBuilder.standard()
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("dynamodb.us-east-2.amazonaws.com", "us-east-2"))
-                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
-                .build();
-    }
-
-
-    @Bean
-    public AmazonSNS amazonSNS() {
-        BasicAWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-
-        return AmazonSNSClientBuilder
-                .standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(region.toString())
-                .build();
-    }
-
-    @Bean(name = "reportEventTopic")
-    //se houver novos topicos futuramente criar novos metodos iguais a este com outros @Beans e uma nova arn
-    public Topic snsBookTopic() {
-        return new Topic().withTopicArn(bookTopicArn);
     }
 
 
