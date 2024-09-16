@@ -1,6 +1,7 @@
 # Desafio-Sensidia
 
-### Esta api consiste no recebimento de uma chamada para o processamento de um arquivo(contagem de linhas), onde é recebido o arquivo e os metadados do arquivo e do solicitante 
+### Este projeto consiste em duas APIs uma de produzir o recebimento de uma chamada para o processamento de um arquivo(contagem de linhas), onde é recebido o arquivo e os metadados do arquivo e do solicitante e enviado para o aws
+ 
 
 ## Recebimento da mensagen:
 
@@ -14,7 +15,7 @@
 
 ### Após o recebimento da requisição, é enviado o arquivo do relatorio a ser processado para o bucket S3 e os metadados da requisição de processamento para a fila SQS 
 
-## Consumo
+## Consumo - https://github.com/elisio-ricardo/Desafio-Sensidia-Consumo-AWS
 
 ### A api fica escutando a a fila SQS, quando chega uma solicitação de processamento, ela pega o nome do arquivo que esta dentro do corpo da mensagem e faz o download do arquivo que esta no S3
 
