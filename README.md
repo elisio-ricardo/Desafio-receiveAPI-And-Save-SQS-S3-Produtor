@@ -1,6 +1,6 @@
 # Desafio-Sensidia
 
-## Esta api consiste no recebimento de uma chamada com arquivo e metadatas e envio para o aws e por praticidade a mesma api consome estes arquivos e metadatas, mas sendo aconselhavel a separação de produção e consumo
+### Esta api consiste no recebimento de uma chamada para o processamento de um arquivo(contagem de linhas), onde é recebido o arquivo e os metadados do arquivo e do solicitante 
 
 ## Recebimento da mensagen:
 
@@ -12,13 +12,16 @@
 
 ## Produção
 
-### Após o recebimento da requisição, é enviado o arquivo do relatorio para o bucket S3 e os metadatas  da requisição de processamento para a fila SQS 
+### Após o recebimento da requisição, é enviado o arquivo do relatorio a ser processado para o bucket S3 e os metadados da requisição de processamento para a fila SQS 
 
 ## Consumo
 
 ### A api fica escutando a a fila SQS, quando chega uma solicitação de processamento, ela pega o nome do arquivo que esta dentro do corpo da mensagem e faz o download do arquivo que esta no S3
 
+### Importante: a mensagem tem um Reetry de 3 tentativas após isso ela será enviada para o DLQ
+
 ### Faz o processamento do arquivo e conta a quantidade de linhas que tem no arquivo, gera um relatorio e envia para o topico SNS
+### Se houver erro ao tentar fazer download ou processamento do arquivo o status é definido como nulo
 
 ## Desenho da Solução
 
